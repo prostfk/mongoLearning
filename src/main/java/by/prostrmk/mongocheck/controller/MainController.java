@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -16,9 +17,16 @@ public class MainController {
     @Autowired
     UserRepository repository;
 
-    @GetMapping(value = "/{username}", produces = "application/json")
-    public User getUserInfo(@PathVariable String username) {
-        return repository.findUserByName(username);
+    @GetMapping(value = "/")
+    public ModelAndView getIndex(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        return new ModelAndView("index", "user", user);
+    }
+
+    @GetMapping(value = "/all", produces = "application/json")
+    @ResponseBody
+    public List getUserInfo() {
+        return repository.findAll();
     }
 
     @RequestMapping(value = "/auth", method = RequestMethod.GET)
@@ -28,8 +36,11 @@ public class MainController {
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public String postAuth(HttpSession session, User user) {
-
-        return null;
+        if (user.getPassword()!=null && user.getName()!=null){
+            repository.save(user);
+            session.setAttribute("user", user);
+        }
+        return "redirect:/";
     }
 
     @GetMapping("/add")
