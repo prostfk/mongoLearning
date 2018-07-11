@@ -17,10 +17,12 @@ public class MainController {
     @Autowired
     UserRepository repository;
 
-    @GetMapping(value = "/")
-    public ModelAndView getIndex(HttpSession session){
-        User user = (User) session.getAttribute("user");
-        return new ModelAndView("index", "user", user);
+    @GetMapping(value = "/{username}/{password}", produces = "application/json")
+    @ResponseBody
+    public User getIndex(HttpSession session, @PathVariable String username, @PathVariable String password){
+        User user = new User(username,password);
+        repository.save(user);
+        return user;
     }
 
     @GetMapping(value = "/all", produces = "application/json")
@@ -43,12 +45,6 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/add")
-    @ResponseBody
-    public String add(){
-        repository.save(new User("Roman", "123"));
-        repository.save(new User("Andrey", "321"));
-        return "classno sohranilos";
-    }
+
 
 }
