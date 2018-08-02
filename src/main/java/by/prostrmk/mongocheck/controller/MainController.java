@@ -3,6 +3,7 @@ package by.prostrmk.mongocheck.controller;
 import by.prostrmk.mongocheck.model.entity.User;
 import by.prostrmk.mongocheck.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +17,9 @@ public class MainController {
 
     @Autowired
     UserRepository repository;
+
+    @Autowired
+    PasswordEncoder encoder;
 
     @GetMapping(value = "/{username}/{password}", produces = "application/json")
     @ResponseBody
@@ -38,11 +42,24 @@ public class MainController {
 
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public String postAuth(HttpSession session, User user) {
-        if (user.getPassword()!=null && user.getName()!=null){
-            repository.save(user);
-            session.setAttribute("user", user);
-        }
+//        if (user.getPassword()!=null && user.getName()!=null){
+//            repository.save(user);
+//            session.setAttribute("user", user);
+//        }
         return "redirect:/";
+    }
+
+
+    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    public ModelAndView getRegistration(){
+        return new ModelAndView("registration", "user", new User());
+    }
+
+    @RequestMapping(value = "/registration", method = RequestMethod.POST)
+    public String postRegistration(User user){
+        user.setPassword(encoder.encode(user.getPassword()));
+        repository.save(user);
+        return "redirect:/auth";
     }
 
 
