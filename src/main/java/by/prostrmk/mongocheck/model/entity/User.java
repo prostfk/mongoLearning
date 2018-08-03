@@ -15,7 +15,10 @@ public class User {
 
     private String password;
 
+    private UserRole userRole;
+
     public User() {
+        userRole = UserRole.USER;
     }
 
     public User(String name, String password) {
@@ -45,6 +48,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     @Override

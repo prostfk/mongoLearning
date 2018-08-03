@@ -34,7 +34,7 @@ public class AppBeans {
 
     @Bean
     public MongoTemplate mongoTemplate(){
-        return new MongoTemplate(mongoClient(),"MongoDbCheck");
+        return new MongoTemplate(mongoClient(),"SecurityBase");
     }
 
 

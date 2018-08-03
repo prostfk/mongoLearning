@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${user.name}"></title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <style>
+        .container{
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div th:include="~{index.html :: navbar}"></div>
+
+<div class="container">
+
+    <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="https://image.flaticon.com/icons/png/512/146/146022.png">
+        </div>
+        <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4" th:text="${user.name}"><i class="material-icons right">more_vert</i></span>
+            <p><a href="#" th:text="${user.userRole}"></a></p>
+        </div>
+        <div class="card-reveal">
+            <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+            <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
