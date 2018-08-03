@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+</head>
+<body>
+
+
+<ul class="collection">
+    <div th:each="user : ${users}">
+        <li class="collection-item avatar">
+            <img src="https://cdn1.iconfinder.com/data/icons/business-users/512/circle-512.png" alt="" class="circle">
+            <span class="title" th:text="${user.name}"></span>
+            <p th:text="${user.userRole}">
+            </p>
+            <a th:href="'/admin/delete/' + ${user.id}" class="secondary-content"><i class="material-icons">delete</i></a>
+        </li>
+    </div>
+
+</ul>
+
+
+</body>
+</html>
